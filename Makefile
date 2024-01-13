@@ -7,7 +7,7 @@ install: ## Install the poetry environment
 .PHONY: runserver
 runserver: ## Run the server
 	@echo "🚀 Running the server"
-	poetry run uvicorn widget_server.app:app --reload
+	poetry run python -m widget_server.server
 
 .PHONY: lint
 lint: ## Run code quality tools.
