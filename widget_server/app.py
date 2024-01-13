@@ -6,7 +6,8 @@ from pydantic import BaseModel
 
 from widget_server.repository import (
     Widget,
-    widget_store_table,
+    WidgetRepository,
+    _widget_store_table,
 )
 
 app = FastAPI()
@@ -29,8 +30,7 @@ async def create_widget(request: CreateWidgetRequest):
     """
     Create a widget
     """
-    new_widget = Widget(id=str(uuid4()), name=request.name)
-    widget_store_table[new_widget.id] = new_widget
+    new_widget = WidgetRepository().create_widget(request.name)
     return CreateWidgetResponse(
         status="success",
         widget=new_widget,
@@ -54,16 +54,15 @@ async def get_widget(request: GetWidgetRequest):
     """
     Get a widget by ID
     """
-    if request.id not in widget_store_table:
-        return GetWidgetResponse(
-            status="error: widget not found",
-            widget=None,
-        )
-    else:
-        fetched_widget = widget_store_table[request.id]
+    if (fetched_widget := WidgetRepository().get_widget(request.id)) is not None:
         return GetWidgetResponse(
             status="success",
             widget=fetched_widget,
+        )
+    else:
+        return GetWidgetResponse(
+            status="error: widget not found",
+            widget=None,
         )
 
 
@@ -82,7 +81,7 @@ async def list_widgets():
     """
     return ListWidgetsResponse(
         status="success",
-        widgets=list(widget_store_table.values()),
+        widgets=WidgetRepository().get_all_widgets(),
     )
 
 
@@ -104,17 +103,17 @@ async def update_widget(request: UpdateWidgetRequest):
     """
     Update a widget by ID
     """
-    if request.id not in widget_store_table:
+    if (
+        updated_widget := WidgetRepository().update_widget(request.id, request.name)
+    ) is not None:
+        return UpdateWidgetResponse(
+            status="success",
+            widget=updated_widget,
+        )
+    else:
         return UpdateWidgetResponse(
             status="error: widget not found to update",
             widget=None,
-        )
-    else:
-        fetched_widget = widget_store_table[request.id]
-        fetched_widget.name = request.name
-        return UpdateWidgetResponse(
-            status="success",
-            widget=fetched_widget,
         )
 
 
@@ -134,12 +133,11 @@ async def delete_widget(request: DeleteWidgetRequest):
     """
     Delete a widget by ID
     """
-    if request.id not in widget_store_table:
+    if not WidgetRepository().delete_widget(request.id):
         return DeleteWidgetResponse(
             status="error: widget not found to delete",
         )
     else:
-        _ = widget_store_table.pop(request.id)
         return DeleteWidgetResponse(
             status="success",
         )
@@ -157,7 +155,7 @@ async def clear_widgets():
     """
     Delete all widgets
     """
-    widget_store_table.clear()
+    WidgetRepository().delete_all_widgets()
     return ClearWidgetsResponse(
         status="success",
     )
