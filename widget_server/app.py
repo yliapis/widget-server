@@ -1,23 +1,15 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
 from uuid import uuid4
 
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+
+from widget_server.repository import (
+    Widget,
+    widget_store_table,
+)
 
 app = FastAPI()
-
-
-# Core widget model
-
-
-class Widget(BaseModel):
-    id: str
-    name: str
-
-
-# Volatile internal widget store
-# TODO: Replace with a persistent store
-
-widget_store_table: dict[str, Widget] = {}
 
 
 # Create a widget
