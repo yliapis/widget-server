@@ -26,27 +26,27 @@ poetry add $PACKAGE_NAME
 
 # usage
 
-To start up the notebook server, run
+To start up the notebook server:
 ```
 make notebook
 ```
 
-To run tests, run
+To run tests:
 ```
 make test
 ```
 
-To lint, run
+To lint:
 ```
 make lint
 ```
 
-To format, run
+To format:
 ```
 make format
 ```
 
-To run mypy type checking, run
+To run mypy type checking:
 ```
 make typing
 ```
