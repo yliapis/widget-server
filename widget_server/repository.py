@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from sqlmodel import SQLModel, Session, select, Field, create_engine
 from sqlmodel.pool import StaticPool
 
+from widget_server.config import IS_TEST
+
 
 # Core widget model
 
@@ -27,13 +29,16 @@ class _WidgetSQLModel(SQLModel, table=True):
 # import all models from repository to ensure they are registered with SQLModel
 
 
-# TODO: use real database during prod
-#     engine = create_engine("sqlite:///database.db")
-engine = create_engine(
-    "sqlite://",
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,
-)
+print(IS_TEST)
+if IS_TEST:
+    engine = create_engine(
+        "sqlite://",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
+else:
+    engine = create_engine("sqlite:///database.db")
+
 
 SQLModel.metadata.create_all(engine)
 
