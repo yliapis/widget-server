@@ -2,10 +2,9 @@ from datetime import datetime
 import uuid
 from pydantic import BaseModel
 
-from sqlmodel import SQLModel, Session, select, Field, create_engine
-from sqlmodel.pool import StaticPool
+from sqlmodel import SQLModel, Session, select, Field
 
-from widget_server.config import IS_TEST
+from widget_server.engine import engine
 
 
 # Core widget model
@@ -24,20 +23,6 @@ class _WidgetSQLModel(SQLModel, table=True):
     id: str = Field(primary_key=True)
     name: str
     date_created: datetime = Field(default_factory=datetime.utcnow)
-
-
-# import all models from repository to ensure they are registered with SQLModel
-
-
-print(IS_TEST)
-if IS_TEST:
-    engine = create_engine(
-        "sqlite://",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
-else:
-    engine = create_engine("sqlite:///database.db")
 
 
 SQLModel.metadata.create_all(engine)
@@ -67,7 +52,7 @@ class WidgetRepository:
     def __init__(self):
         self._engine = engine  # TODO: inject
 
-    def _insert_widget_record(self, widget: Widget) -> True:
+    def _insert_widget_record(self, widget: Widget) -> None:
         with Session(engine) as session:
             session.add(_to_sqlmodel(widget))
             session.commit()
@@ -80,14 +65,11 @@ class WidgetRepository:
 
     def _query_all_widget_records(self) -> list[Widget]:
         with Session(engine) as session:
-            print(
-                session.exec(
-                    select(_WidgetSQLModel).order_by(_WidgetSQLModel.date_created)
-                ).all()
-            )
             return [
                 _from_sqlmodel(record)
-                for record in session.exec(select(_WidgetSQLModel)).all()
+                for record in session.exec(
+                    select(_WidgetSQLModel).order_by(_WidgetSQLModel.date_created)
+                ).all()
             ]
 
     def _update_widget_record(self, widget: Widget) -> Widget | None:
