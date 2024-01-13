@@ -10,6 +10,13 @@ interface Widget {
   name: string;
 }
 
+const widgetCell = (widget: Widget) => (
+  <tr key={widget.id}>
+    <td style={{ fontSize: 10 }}>{widget.id}</td>
+    <td style={{ fontSize: 10 }}>{widget.name}</td>
+  </tr>
+);
+
 function CreateWidgetInputForm() {
   const [widgetName, setWidgetName] = useState('');
   const [widgets, setWidgets] = useState<Widget[]>([]);
@@ -53,12 +60,7 @@ function CreateWidgetInputForm() {
           </tr>
         </thead>
         <tbody>
-          {widgets.map(widget => (
-            <tr key={widget.id}>
-              <td>{widget.id}</td>
-              <td>{widget.name}</td>
-            </tr>
-          ))}
+          {widgets.map(widgetCell)}
         </tbody>
       </table>
     </div>
