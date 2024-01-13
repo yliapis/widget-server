@@ -7,10 +7,11 @@ from pydantic import BaseModel
 from widget_server.repository import (
     Widget,
     WidgetRepository,
-    _widget_store_table,
 )
 
 app = FastAPI()
+
+widget_repository: WidgetRepository = WidgetRepository()
 
 
 # Create a widget
@@ -30,7 +31,7 @@ async def create_widget(request: CreateWidgetRequest):
     """
     Create a widget
     """
-    new_widget = WidgetRepository().create_widget(request.name)
+    new_widget = widget_repository.create_widget(request.name)
     return CreateWidgetResponse(
         status="success",
         widget=new_widget,
@@ -54,7 +55,7 @@ async def get_widget(request: GetWidgetRequest):
     """
     Get a widget by ID
     """
-    if (fetched_widget := WidgetRepository().get_widget(request.id)) is not None:
+    if (fetched_widget := widget_repository.get_widget(request.id)) is not None:
         return GetWidgetResponse(
             status="success",
             widget=fetched_widget,
@@ -81,7 +82,7 @@ async def list_widgets():
     """
     return ListWidgetsResponse(
         status="success",
-        widgets=WidgetRepository().get_all_widgets(),
+        widgets=widget_repository.get_all_widgets(),
     )
 
 
@@ -104,7 +105,7 @@ async def update_widget(request: UpdateWidgetRequest):
     Update a widget by ID
     """
     if (
-        updated_widget := WidgetRepository().update_widget(request.id, request.name)
+        updated_widget := widget_repository.update_widget(request.id, request.name)
     ) is not None:
         return UpdateWidgetResponse(
             status="success",
@@ -133,7 +134,7 @@ async def delete_widget(request: DeleteWidgetRequest):
     """
     Delete a widget by ID
     """
-    if not WidgetRepository().delete_widget(request.id):
+    if not widget_repository.delete_widget(request.id):
         return DeleteWidgetResponse(
             status="error: widget not found to delete",
         )
@@ -155,7 +156,7 @@ async def clear_widgets():
     """
     Delete all widgets
     """
-    WidgetRepository().delete_all_widgets()
+    widget_repository.delete_all_widgets()
     return ClearWidgetsResponse(
         status="success",
     )
