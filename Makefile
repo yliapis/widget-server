@@ -12,7 +12,7 @@ lint: ## Run code quality tools.
 .PHONY: format
 format: ## Format the code using black
 	@echo "🚀 Formatting code: Running black"
-	poetry run black data_playground notebooks
+	poetry run black data_playground notebooks tests
 
 .PHONY: help
 help:
@@ -21,7 +21,12 @@ help:
 .PHONY: typing
 typing: ## Run mypy to check typing
 	@echo "🚀 Checking typing: Running mypy"
-	poetry run mypy data_playground
+	poetry run mypy data_playground tests
+
+.PHONY: test
+test: ## Run the tests
+	@echo "🚀 Running tests: Running pytest"
+	poetry run pytest tests
 
 .PHONY: notebook
 notebook: ## Launch a jupyter notebook

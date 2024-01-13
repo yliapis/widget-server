@@ -31,6 +31,11 @@ To start up the notebook server, run
 make notebook
 ```
 
+To run tests, run
+```
+make test
+```
+
 To lint, run
 ```
 make lint
@@ -45,3 +50,5 @@ To run mypy type checking, run
 ```
 make typing
 ```
+
+More details can be found in the `Makefile` at the root of the project
