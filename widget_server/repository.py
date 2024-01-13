@@ -1,7 +1,10 @@
+from datetime import datetime
 import uuid
 from pydantic import BaseModel
 
 from sqlmodel import SQLModel, Session, select, Field, create_engine
+from sqlmodel.pool import StaticPool
+
 
 # Core widget model
 
@@ -18,6 +21,7 @@ class _WidgetSQLModel(SQLModel, table=True):
     __tablename__ = "widgets"
     id: str = Field(primary_key=True)
     name: str
+    date_created: datetime = Field(default_factory=datetime.utcnow)
 
 
 # import all models from repository to ensure they are registered with SQLModel
@@ -25,7 +29,11 @@ class _WidgetSQLModel(SQLModel, table=True):
 
 # TODO: use real database during prod
 #     engine = create_engine("sqlite:///database.db")
-engine = create_engine("sqlite:///meow.db")
+engine = create_engine(
+    "sqlite://",
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool,
+)
 
 SQLModel.metadata.create_all(engine)
 
@@ -67,7 +75,11 @@ class WidgetRepository:
 
     def _query_all_widget_records(self) -> list[Widget]:
         with Session(engine) as session:
-            print(session.exec(select(_WidgetSQLModel)).all())
+            print(
+                session.exec(
+                    select(_WidgetSQLModel).order_by(_WidgetSQLModel.date_created)
+                ).all()
+            )
             return [
                 _from_sqlmodel(record)
                 for record in session.exec(select(_WidgetSQLModel)).all()
