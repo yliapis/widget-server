@@ -7,7 +7,7 @@ Feel free to delete this file if not needed
 import numpy as np
 
 
-def generate_uniform_noise(samples: int, radius: float=1.0) -> np.ndarray:
+def generate_uniform_noise(samples: int, radius: float = 1.0) -> np.ndarray:
     """
     Generates a uniform zero mean noise vector of length samples
 

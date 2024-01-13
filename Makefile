@@ -12,7 +12,7 @@ lint: ## Run code quality tools.
 .PHONY: format
 format: ## Format the code using black
 	@echo "🚀 Formatting code: Running black"
-	poetry run black data_playground
+	poetry run black data_playground notebooks
 
 .PHONY: help
 help:

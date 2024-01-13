@@ -30,3 +30,13 @@ To start up the notebook server, run
 ```
 make notebook
 ```
+
+To lint, run
+```
+make lint
+```
+
+To format, run
+```
+make format
+```

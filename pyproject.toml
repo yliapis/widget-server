@@ -18,7 +18,7 @@ notebook = "^7.0.6"
 web3 = "^6.14.0"
 pydantic = "^2.5.3"
 ruff = "^0.1.13"
-black = "^23.12.1"
+black = {extras = ["jupyter"], version = "^23.12.1"}
 
 
 [build-system]
