@@ -1,4 +1,3 @@
-
 from widget_server import config as app_config
 
 
