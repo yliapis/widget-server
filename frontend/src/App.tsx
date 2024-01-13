@@ -30,7 +30,13 @@ function CreateWidgetInputForm() {
       body: JSON.stringify({
         "name": widgetName
       })
-    });
+    })
+      .then(() => {
+        // Refresh the list of widgets after successful submission
+        fetch(BASE_URL + "/widgets")
+          .then(response => response.json())
+          .then(data => setWidgets(data.widgets));
+      });
   };
 
   return (
