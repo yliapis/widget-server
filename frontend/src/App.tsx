@@ -66,9 +66,9 @@ function CreateWidgetInputForm() {
   return (
     <div>
       <h1>Widget List</h1>
-      <span>
-        <input type="text" id="fname" name="fname" value={widgetName} onChange={(e) => setWidgetName(e.target.value)} />
-        <input type="submit" value="Create Widget" onClick={clickHandler} />
+      <span style={{ display: 'flex', justifyContent: 'center' }}>
+        <input type="text" value={widgetName} onChange={(e) => setWidgetName(e.target.value)} style={{ flex: '1 0 auto' }} />
+        <input type="submit" value="Create Widget" onClick={clickHandler} style={{ marginLeft: '10px' }} />
       </span>
       <table className="table">
         <thead>
