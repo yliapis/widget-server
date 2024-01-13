@@ -9,6 +9,11 @@ runserver: ## Run the server
 	@echo "🚀 Running the server"
 	poetry run python -m widget_server.server
 
+.PHONY: runfrontend
+runfrontend: ## Run the frontend
+	@echo "🚀 Running the frontend"
+	npm run --prefix frontend start
+
 .PHONY: lint
 lint: ## Run code quality tools.
 	@echo "🚀 Linting code: Running ruff"
