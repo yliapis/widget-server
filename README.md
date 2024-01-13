@@ -18,12 +18,23 @@ To add a python package, run
 poetry add $PACKAGE_NAME
 ```
 
+TODO: frontend setup details, update Makefile as well
+
 # usage
 
-TODO: To start up the server:
+To start up the server:
 ```
-TODO
+make runserver
 ```
+
+To start up the frontend:
+```
+make runfrontend
+```
+
+Run both of these commands to use the web application
+
+# development
 
 To run tests:
 ```
