@@ -10,22 +10,39 @@ interface Widget {
   name: string;
 }
 
-const widgetCell = (widget: Widget) => (
-  <tr key={widget.id}>
-    <td style={{ fontSize: 10 }}>{widget.id}</td>
-    <td style={{ fontSize: 10 }}>{widget.name}</td>
-  </tr>
-);
+const widgetCell = (widget: Widget, renderList: () => void) => {
+  const deleteCallback = () => {
+    fetch(BASE_URL + "/widgets/delete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "id": widget.id,
+      }),
+    })
+      .then(renderList);
+  }
+  return (
+    <tr key={widget.id}>
+      <td style={{ fontSize: 10 }}>{widget.id}</td>
+      <td style={{ fontSize: 10 }}>{widget.name}</td>
+      <td style={{ fontSize: 10 }}><button onClick={deleteCallback}>Delete</button></td>
+    </tr>
+  );
+};
 
 function CreateWidgetInputForm() {
   const [widgetName, setWidgetName] = useState('');
   const [widgets, setWidgets] = useState<Widget[]>([]);
 
-  useEffect(() => {
+  const renderList = () => {
     fetch(BASE_URL + "/widgets")
       .then(response => response.json())
       .then(data => setWidgets(data.widgets));
-  }, []);
+  };
+
+  useEffect(renderList, []);
 
   const clickHandler = () => {
     console.log(widgetName);
@@ -60,7 +77,7 @@ function CreateWidgetInputForm() {
           </tr>
         </thead>
         <tbody>
-          {widgets.map(widgetCell)}
+          {widgets.map((widget) => widgetCell(widget, renderList))}
         </tbody>
       </table>
     </div>
