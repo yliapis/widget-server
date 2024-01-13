@@ -4,6 +4,11 @@ install: ## Install the poetry environment
 	pip3 install poetry
 	poetry install
 
+.PHONY: runserver
+runserver: ## Run the server
+	@echo "🚀 Running the server"
+	poetry run uvicorn widget_server.app:app --reload
+
 .PHONY: lint
 lint: ## Run code quality tools.
 	@echo "🚀 Linting code: Running ruff"
