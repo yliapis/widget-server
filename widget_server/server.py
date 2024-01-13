@@ -1,4 +1,3 @@
-
 # this needs to be imported to start the app
 from widget_server.app import app  # noqa: F401
 
