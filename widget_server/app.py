@@ -64,7 +64,7 @@ async def get_widget(request: GetWidgetRequest):
     """
     if request.id not in widget_store_table:
         return GetWidgetResponse(
-            status="error",
+            status="error: widget not found",
             widget=None,
         )
     else:
