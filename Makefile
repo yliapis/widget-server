@@ -12,22 +12,17 @@ lint: ## Run code quality tools.
 .PHONY: format
 format: ## Format the code using black
 	@echo "🚀 Formatting code: Running black"
-	poetry run black data_playground notebooks tests
+	poetry run black widget_server tests
 
 .PHONY: typing
 typing: ## Run mypy to check typing
 	@echo "🚀 Checking typing: Running mypy"
-	poetry run mypy data_playground tests
+	poetry run mypy widget_server tests
 
 .PHONY: test
 test: ## Run the tests
 	@echo "🚀 Running tests: Running pytest"
 	poetry run pytest tests
-
-.PHONY: notebook
-notebook: ## Launch a jupyter notebook
-	@echo "🚀 Launching a jupyter notebook with the root directory as the project root"
-	poetry run jupyter notebook --notebook-dir=./notebooks/
 
 .PHONY: help
 help:

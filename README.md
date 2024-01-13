@@ -1,6 +1,6 @@
-# data-playground
+# widget-server
 
-General purpose repo for ad-hoc data analysis. This repo is intended to be forked and modified for specific use cases as needed.
+General purpose repo demoing an http server written in python. The server is a demo widget CRUD server.
 
 # setup
 
@@ -18,17 +18,11 @@ To add a python package, run
 poetry add $PACKAGE_NAME
 ```
 
-# structure
-
-* Use `./data_playground` for imported python module code
-* Use `./notebooks` for ad-hoc data analysis
-
-
 # usage
 
-To start up the notebook server:
+TODO: To start up the server:
 ```
-make notebook
+TODO
 ```
 
 To run tests:

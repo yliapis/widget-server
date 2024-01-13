@@ -5,7 +5,6 @@ __pycache__/
 *$py.class
 
 # cache directories to ignore by default
-.ipynb_checkpoints
 .mypy_cache
 .pytest_cache
 .ruff_cache
