@@ -9,6 +9,8 @@ def test_app_basic_client_usage():
 
     # TODO: split this up and organize it more; it is currently a bit unruley
     """
+    print(2)
+
     client = TestClient(app)
     # Create a new widget
     create_response = client.post(
