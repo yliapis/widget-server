@@ -25,9 +25,9 @@ const widgetCell = (widget: Widget, renderList: () => void) => {
   }
   return (
     <tr key={widget.id}>
-      <td style={{ fontSize: 10 }}>{widget.id}</td>
-      <td style={{ fontSize: 10 }}>{widget.name}</td>
-      <td style={{ fontSize: 10 }}><button onClick={deleteCallback}>Delete</button></td>
+      <th scope="row" style={{ fontSize: 17 }}>{widget.id}</th>
+      <td style={{ fontSize: 17 }}>{widget.name}</td>
+      <td style={{ fontSize: 17 }}><button onClick={deleteCallback}>Delete</button></td>
     </tr>
   );
 };
@@ -65,15 +65,17 @@ function CreateWidgetInputForm() {
 
   return (
     <div>
+      <h1>Widget List</h1>
       <span>
         <input type="text" id="fname" name="fname" value={widgetName} onChange={(e) => setWidgetName(e.target.value)} />
         <input type="submit" value="Create Widget" onClick={clickHandler} />
       </span>
-      <table>
+      <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
+            <th style={{ fontSize: 32, fontWeight: 'bold' }} scope="col">ID</th>
+            <th style={{ fontSize: 32, fontWeight: 'bold' }} scope="col">Name</th>
+            <th style={{ fontSize: 32, fontWeight: 'bold' }} scope="col"/>
           </tr>
         </thead>
         <tbody>
