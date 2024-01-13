@@ -18,6 +18,11 @@ format: ## Format the code using black
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: typing
+typing: ## Run mypy to check typing
+	@echo "🚀 Checking typing: Running mypy"
+	poetry run mypy data_playground
+
 .PHONY: notebook
 notebook: ## Launch a jupyter notebook
 	@echo "🚀 Launching a jupyter notebook with the root directory as the project root"

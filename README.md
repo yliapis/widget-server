@@ -40,3 +40,8 @@ To format, run
 ```
 make format
 ```
+
+To run mypy type checking, run
+```
+make typing
+```
