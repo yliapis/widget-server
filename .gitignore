@@ -4,5 +4,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# jupyter notebook files to ignore by default
+# cache directories to ignore by default
 .ipynb_checkpoints
+.ruff_cache
